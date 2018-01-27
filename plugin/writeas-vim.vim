@@ -71,7 +71,7 @@ def _blogpost(title):
         print ("Error: {}".format(output['error_msg']))
     else:
         print ("Post Uploaded")
-        v.current.buffer.append("write.as/{}{} \n".format(blog, output['data']['slug']))
+        v.current.buffer.append("write.as/{}/{} \n".format(blog, output['data']['slug']))
         v.current.buffer.append("posted: {} \n".format(output['data']['created']))
 EOF
 
