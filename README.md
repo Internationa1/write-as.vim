@@ -1,7 +1,8 @@
 # Write-As.Vim
 
-*Author: [international](https://cybre.space/international)  [&#128231;](mailto:international@airmail.cc)* 
-<link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/intrntnl"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt=""><span style="margin-left:5px">Buy me a coffee</span></a>
+*Author: [international](https://cybre.space/international)  [&#128231;](mailto:international@airmail.cc) <a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/intrntnl"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt=""><span style="margin-left:5px">Buy me a coffee</span></a>*
+
+
 
 This is a simple plugin for vim that allows one to upload blogposts to [write.as](https://write.as/) from the VIM Buffer.
 
