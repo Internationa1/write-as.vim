@@ -43,9 +43,7 @@ def _anonpost(title):
     else:
         print ("Post Uploaded")
         v.current.buffer.append("write.as/{} \n".format(output['data']['id']))
-        v.current.buffer.append("posted: {} \n".format(output['data']['created']))
-        v.current.buffer.append("token: {} \n".format(output['data']['token']))
-        v.current.buffer.append("auth: {} \n".format(token))
+        v.current.buffer.append("posted: {} \n".format(output['data']['created'])) 
 
 def _blogpost(title):
     
@@ -75,8 +73,6 @@ def _blogpost(title):
         print ("Post Uploaded")
         v.current.buffer.append("write.as/{}{} \n".format(blog, output['data']['slug']))
         v.current.buffer.append("posted: {} \n".format(output['data']['created']))
-        v.current.buffer.append("token: {} \n".format(output['data']['token']))
-        v.current.buffer.append("auth: {} \n".format(token))
 EOF
 
 command! -nargs=1 AnonPost :python _anonpost(<f-args>)
