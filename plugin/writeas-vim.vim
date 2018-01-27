@@ -12,9 +12,10 @@ v = vim
 rq = requests 
 
 #Define Variables
-user = vim.eval(writeas_u)
-pword = vim.eval(writeas_p)
-blog = vim.eval(writeas_b)
+user = vim.eval("g:writeas_u")
+pword = vim.eval("g:writeas_p")
+blog = vim.eval("g:writeas_b")
+
 def _anonpost(title):
 
     # Authenticate User
@@ -47,17 +48,7 @@ def _anonpost(title):
         v.current.buffer.append("auth: {} \n".format(token))
 
 def _blogpost(title):
-    import requests
-    import vim
-    import string
-
-    # Shorten Libraries
-    v = vim
-    rq = requests
     
-    # Define variables
-    output = {}
-
     # Authenticate User
     url = "https://write.as/api/auth/login"
     payload = {"alias": user, "pass": pword}
