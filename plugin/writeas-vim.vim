@@ -12,9 +12,9 @@ v = vim
 rq = requests 
 
 #Define Variables
-user = vim.eval(g:writeas_u)
-pword = vim.eval(g:writeas_p)
-blog = vim.eval(g:writeas_b)
+user = vim.eval(writeas_u)
+pword = vim.eval(writeas_p)
+blog = vim.eval(writeas_b)
 def _anonpost(title):
 
     # Authenticate User
