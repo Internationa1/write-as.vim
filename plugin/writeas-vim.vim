@@ -103,5 +103,4 @@ EOF
 
 command! -nargs=1 AnonPost :python _anonpost(<f-args>)
 command! -nargs=1 BlogPost :python _blogpost(<f-args>)
-write.as/international/test 
-posted: 2018-01-28T06:27:22Z 
+
