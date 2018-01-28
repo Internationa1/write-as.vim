@@ -15,22 +15,22 @@ rq = requests
 user = vim.eval("g:writeas_u")
 pword = vim.eval("g:writeas_p")
 blog = vim.eval("g:writeas_b")
-crosspost = vim.eval("g:writeas_cp")
-if crosspost == 'True':
-        crosspost == True
-        twitter = vim.eval("g:writeas_tw")
-        if twitter == "False":
-            twitter = False
-        tumblr = vim.eval("g:writeas_tb")
-        if tumblr == "False":
-            tumblr = False
-        medium = vim.eval("g:writeas_md")
-        if medium == "False":
-            medium = False
-elif vim.eval("g:writeas_cp") != 'True':
-    crosspost = False
-else:
-    crosspost = False
+# crosspost = vim.eval("g:writeas_cp")
+# if crosspost == 'True':
+#         crosspost == True
+#         twitter = vim.eval("g:writeas_tw")
+#         if twitter == "False":
+#             twitter = False
+#         tumblr = vim.eval("g:writeas_tb")
+#         if tumblr == "False":
+#             tumblr = False
+#         medium = vim.eval("g:writeas_md")
+#         if medium == "False":
+#             medium = False
+# elif vim.eval("g:writeas_cp") != 'True':
+#     crosspost = False
+# else:
+crosspost = False
 
 def _anonpost(title):
 
