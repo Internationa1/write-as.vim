@@ -21,10 +21,6 @@ Then, add this somewhere into your *.vimrc*:
 let g:writeas_u = 'YOUR_USERNAME'
 let g:writeas_p = 'YOUR_PASSWORD'
 let g:writeas_b = 'YOUR BLOG'
-let g:writeas_cp = 'False' " Set to True if you want to crosspost you uploads
-let g:writeas_tw = 'False' " Twitter Handle
-let g:writeas_tb = 'False' " Tumblr Handle
-let g:writeas_md = 'False' " Medium Handle
 ```
 
 # Usage
@@ -53,9 +49,6 @@ posted: 2018-01-27 T 03:31:58 Z
 Authenticated.
 Blog Updated.
 ```
-
-If you have crossposting enabled, it will automagically do that.
-(In theory. In practice, it works about 10% of the time.)
 
 It will then dump some information in the file:
 
