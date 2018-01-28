@@ -15,6 +15,22 @@ rq = requests
 user = vim.eval("g:writeas_u")
 pword = vim.eval("g:writeas_p")
 blog = vim.eval("g:writeas_b")
+crosspost = vim.eval("g:writeas_cp")
+if crosspost == 'True':
+        crosspost == True
+        twitter = vim.eval("g:writeas_tw")
+        if twitter == "False":
+            twitter = False
+        tumblr = vim.eval("g:writeas_tb")
+        if tumblr == "False":
+            tumblr = False
+        medium = vim.eval("g:writeas_md")
+        if medium == "False":
+            medium = False
+elif vim.eval("g:writeas_cp") != 'True':
+    crosspost = False
+else:
+    crosspost = False
 
 def _anonpost(title):
 
@@ -64,7 +80,17 @@ def _blogpost(title):
     url = "https://write.as/api/collections/{}/posts".format(blog)
     head = {"Authorization": "Token {}".format(token), "Content-Type": "application/json"}
     post = string.join(v.current.buffer, "\n")
-    payload = {"body": post, "title": title}
+    if crosspost == True:
+        crossdict = {}            
+        if twitter != False:
+            crossdict.update({"twitter": twitter})
+        if tumblr != False:
+            crossdict.update({"tumblr": tumblr})
+        if medium != False:
+            crossdict.update({"medium": medium})
+        payload = {"body": post, "title": title, "crosspost": crossdict}            
+    else:
+        payload = {"body": post, "title": title} 
     response = rq.post(url, json=payload, headers=head)
     output = response.json()
     if output['code'] != 201:
@@ -77,3 +103,5 @@ EOF
 
 command! -nargs=1 AnonPost :python _anonpost(<f-args>)
 command! -nargs=1 BlogPost :python _blogpost(<f-args>)
+write.as/international/test 
+posted: 2018-01-28T06:27:22Z 
