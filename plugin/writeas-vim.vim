@@ -1,8 +1,12 @@
-if !has('python')
+if has('python')
+        let s:hd = "python << EOF"
+elseif has('python3')
+        let s:hd = "python3 << EOF"
+else
         finish
 endif
 
-python << EOF
+exec s:hd
 import requests
 import vim
 import string
@@ -50,7 +54,7 @@ def _anonpost(title):
 
     url = "https://write.as/api/posts"
     head = {"Authorization": "Token {}".format(token), "Content-Type": "application/json"}
-    post = string.join(v.current.buffer, "\n")
+    post = "\n".join(v.current.buffer)
     payload = {"body": post, "title": title}
     response = rq.post(url, json=payload, headers=head)
     output = response.json()
@@ -79,7 +83,7 @@ def _blogpost(title):
 
     url = "https://write.as/api/collections/{}/posts".format(blog)
     head = {"Authorization": "Token {}".format(token), "Content-Type": "application/json"}
-    post = string.join(v.current.buffer, "\n")
+    post = "\n".join(v.current.buffer)
     if crosspost == True:
         crossdict = {}            
         if twitter != False:
@@ -101,6 +105,10 @@ def _blogpost(title):
         v.current.buffer.append("posted: {} \n".format(output['data']['created']))
 EOF
 
-command! -nargs=1 AnonPost :python _anonpost(<f-args>)
-command! -nargs=1 BlogPost :python _blogpost(<f-args>)
-
+if has('python')
+        command! -nargs=1 AnonPost :python _anonpost(<f-args>)
+        command! -nargs=1 BlogPost :python _blogpost(<f-args>)
+elseif has('python3')
+        command! -nargs=1 AnonPost :python3 _anonpost(<f-args>)
+        command! -nargs=1 BlogPost :python3 _blogpost(<f-args>)
+endif
