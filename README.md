@@ -26,7 +26,7 @@ Now open vim and run `:WriteAsAuth`
 ```VimScript
 :WriteAsAuth
 Username: janedoe
-Enter password: *******
+Password: *******
 Success. Add to .vimrc:
 let g:writeas_t = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 ```

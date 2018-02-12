@@ -47,7 +47,7 @@ def _authenticate(outputToken):
         password = pword
         print("Authenticating...")
     except NameError:
-        vim.command("let g:writeas_p = inputsecret('Enter password: ')")
+        vim.command("let g:writeas_p = inputsecret('Password: ')")
         password = vim.eval('g:writeas_p')
         print('...')
 
