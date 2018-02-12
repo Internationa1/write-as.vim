@@ -39,6 +39,7 @@ def _authenticate(outputToken):
     except NameError:
         vim.command("let g:writeas_u = input('Username: ')")
         username = vim.eval('g:writeas_u')
+        vim.command("echo '\r'")
 
     # Prompt for password if necessary
     try:
