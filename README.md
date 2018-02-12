@@ -39,6 +39,15 @@ let g:writeas_b = 'YOUR BLOG'
 let g:writeas_t = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 ```
 
+**Optionally** you can supply your username and password, instead.
+
+```VimScript
+" Writeas User Info
+let g:writeas_u = 'YOUR_USERNAME'
+let g:writeas_p = 'YOUR_PASSWORD'
+let g:writeas_b = 'YOUR BLOG'
+```
+
 # Usage
 
 Make sure you're in the buffer that you intend to upload as a blog post.
