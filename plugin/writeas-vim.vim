@@ -16,7 +16,10 @@ v = vim
 rq = requests 
 
 #Define Variables
-user = vim.eval("g:writeas_u")
+try:
+    user = vim.eval("g:writeas_u")
+except:
+    pass
 try:
     pword = vim.eval("g:writeas_p")
 except:
@@ -29,10 +32,19 @@ except:
 
 def _authenticate(outputToken):
 
+    # Prompt for username if necessary
+    try:
+        user
+        username = user
+    except NameError:
+        vim.command("let g:writeas_u = input('Username: ')")
+        username = vim.eval('g:writeas_u')
+
     # Prompt for password if necessary
     try:
         pword
         password = pword
+        print("Authenticating...")
     except NameError:
         vim.command("let g:writeas_p = inputsecret('Enter password: ')")
         password = vim.eval('g:writeas_p')
@@ -40,7 +52,7 @@ def _authenticate(outputToken):
 
     # Authenticate User
     url = "https://write.as/api/auth/login"
-    payload = {"alias": user, "pass": password}
+    payload = {"alias": username, "pass": password}
     auth = rq.post(url, json=payload)  # Authentication request
     response = auth.json()  # Interpret JSON response
     if response['code'] != 200:
