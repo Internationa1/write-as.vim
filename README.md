@@ -17,6 +17,31 @@ Plugin 'internationa1/write-as.vim'
 Then, add this somewhere into your *.vimrc*:
 
 ```VimScript
+" Writeas Blog Info
+let g:writeas_b = 'YOUR BLOG'
+```
+
+Now open vim and run `:WriteAsAuth`
+
+```VimScript
+:WriteAsAuth
+Username: janedoe
+Password: *******
+Success. Add to .vimrc:
+let g:writeas_t = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+```
+
+And add that line to your *.vimrc*:
+
+```VimScript
+" Writeas Blog Info
+let g:writeas_b = 'YOUR BLOG'
+let g:writeas_t = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+```
+
+**Optionally** you can supply your username and password, instead.
+
+```VimScript
 " Writeas User Info
 let g:writeas_u = 'YOUR_USERNAME'
 let g:writeas_p = 'YOUR_PASSWORD'

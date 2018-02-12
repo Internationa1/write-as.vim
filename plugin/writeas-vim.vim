@@ -16,15 +16,44 @@ v = vim
 rq = requests 
 
 #Define Variables
-user = vim.eval("g:writeas_u")
-pword = vim.eval("g:writeas_p")
+try:
+    user = vim.eval("g:writeas_u")
+except:
+    pass
+try:
+    pword = vim.eval("g:writeas_p")
+except:
+    pass
 blog = vim.eval("g:writeas_b")
+try:
+    token = vim.eval("g:writeas_t")
+except:
+    pass
 
-def _anonpost(title):
+def _authenticate(outputToken):
+
+    # Prompt for username if necessary
+    try:
+        user
+        username = user
+    except NameError:
+        vim.command("let g:writeas_u = input('Username: ')")
+        username = vim.eval('g:writeas_u')
+        vim.command("echo '\r'")
+
+    # Prompt for password if necessary
+    try:
+        pword
+        password = pword
+        print("Authenticating...")
+    except NameError:
+        vim.command("let g:writeas_p = inputsecret('Password: ')")
+        password = vim.eval('g:writeas_p')
+        print('...')
 
     # Authenticate User
     url = "https://write.as/api/auth/login"
-    payload = {"alias": user, "pass": pword}
+    payload = {"alias": username, "pass": password}
     auth = rq.post(url, json=payload)  # Authentication request
     response = auth.json()  # Interpret JSON response
     if response['code'] != 200:
@@ -32,7 +61,21 @@ def _anonpost(title):
         quit()
     else:
         token = response['data']['access_token']
-        print("Authenticated.")
+        if outputToken:
+            print("Success. Add to .vimrc:")
+            print("let g:writeas_t = '{}'".format(token))
+        else:
+            print("Authenticated.")
+
+    return token
+
+def _anonpost(title):
+
+    global token
+    try:
+        token
+    except NameError:
+        token = _authenticate(False)
 
     # Post!!!
 
@@ -51,17 +94,11 @@ def _anonpost(title):
 
 def _blogpost(title):
     
-    # Authenticate User
-    url = "https://write.as/api/auth/login"
-    payload = {"alias": user, "pass": pword}
-    auth = rq.post(url, json=payload)  # Authentication request
-    response = auth.json()  # Interpret JSON response
-    if response['code'] != 200:
-        print(response['error_msg'])
-        quit()
-    else:
-        token = response['data']['access_token']
-        print("Authenticated.")
+    global token
+    try:
+        token
+    except NameError:
+        token = _authenticate(False)
 
     # Post!!!
 
@@ -82,7 +119,9 @@ EOF
 if has('python')
         command! -nargs=1 AnonPost :python _anonpost(<f-args>)
         command! -nargs=1 BlogPost :python _blogpost(<f-args>)
+        command! -nargs=0 WriteAsAuth :python _authenticate(True)
 elseif has('python3')
         command! -nargs=1 AnonPost :python3 _anonpost(<f-args>)
         command! -nargs=1 BlogPost :python3 _blogpost(<f-args>)
+        command! -nargs=0 WriteAsAuth :python3 _authenticate(True)
 endif
