@@ -20,6 +20,24 @@ user = vim.eval("g:writeas_u")
 pword = vim.eval("g:writeas_p")
 blog = vim.eval("g:writeas_b")
 
+def _authenticate():
+    vim.command("let g:writeas_p = inputsecret('Enter password: ')")
+    pword = vim.eval('g:writeas_p')
+    print('...')
+
+    # Authenticate User
+    url = "https://write.as/api/auth/login"
+    payload = {"alias": user, "pass": pword}
+    auth = rq.post(url, json=payload)  # Authentication request
+    response = auth.json()  # Interpret JSON response
+    if response['code'] != 200:
+        print(response['error_msg'])
+        quit()
+    else:
+        token = response['data']['access_token']
+        print("Authenticated. Add to .vimrc:")
+        print("let g:writeas_t = '{}'".format(token))
+
 def _anonpost(title):
 
     # Authenticate User
@@ -82,7 +100,9 @@ EOF
 if has('python')
         command! -nargs=1 AnonPost :python _anonpost(<f-args>)
         command! -nargs=1 BlogPost :python _blogpost(<f-args>)
+        command! -nargs=0 WriteAsAuth :python _authenticate(<f-args>)
 elseif has('python3')
         command! -nargs=1 AnonPost :python3 _anonpost(<f-args>)
         command! -nargs=1 BlogPost :python3 _blogpost(<f-args>)
+        command! -nargs=0 WriteAsAuth :python3 _authenticate(<f-args>)
 endif
