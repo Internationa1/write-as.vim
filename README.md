@@ -19,8 +19,22 @@ Then, add this somewhere into your *.vimrc*:
 ```VimScript
 " Writeas User Info
 let g:writeas_u = 'YOUR_USERNAME'
-let g:writeas_p = 'YOUR_PASSWORD'
 let g:writeas_b = 'YOUR BLOG'
+```
+
+Now open vim and run `:WriteAsAuth`
+
+```VimScript
+:WriteAsAuth
+Enter password: *******
+Success. Add to .vimrc:
+let g:writeas_t = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+```
+
+And add that line to your *.vimrc*:
+
+```VimScript
+let g:writeas_t = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 ```
 
 # Usage

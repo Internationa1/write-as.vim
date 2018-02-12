@@ -17,17 +17,30 @@ rq = requests
 
 #Define Variables
 user = vim.eval("g:writeas_u")
-pword = vim.eval("g:writeas_p")
+try:
+    pword = vim.eval("g:writeas_p")
+except:
+    pass
 blog = vim.eval("g:writeas_b")
+try:
+    token = vim.eval("g:writeas_t")
+except:
+    pass
 
-def _authenticate():
-    vim.command("let g:writeas_p = inputsecret('Enter password: ')")
-    pword = vim.eval('g:writeas_p')
-    print('...')
+def _authenticate(outputToken):
+
+    # Prompt for password if necessary
+    try:
+        pword
+        password = pword
+    except NameError:
+        vim.command("let g:writeas_p = inputsecret('Enter password: ')")
+        password = vim.eval('g:writeas_p')
+        print('...')
 
     # Authenticate User
     url = "https://write.as/api/auth/login"
-    payload = {"alias": user, "pass": pword}
+    payload = {"alias": user, "pass": password}
     auth = rq.post(url, json=payload)  # Authentication request
     response = auth.json()  # Interpret JSON response
     if response['code'] != 200:
@@ -35,22 +48,21 @@ def _authenticate():
         quit()
     else:
         token = response['data']['access_token']
-        print("Authenticated. Add to .vimrc:")
-        print("let g:writeas_t = '{}'".format(token))
+        if outputToken:
+            print("Success. Add to .vimrc:")
+            print("let g:writeas_t = '{}'".format(token))
+        else:
+            print("Authenticated.")
+
+    return token
 
 def _anonpost(title):
 
-    # Authenticate User
-    url = "https://write.as/api/auth/login"
-    payload = {"alias": user, "pass": pword}
-    auth = rq.post(url, json=payload)  # Authentication request
-    response = auth.json()  # Interpret JSON response
-    if response['code'] != 200:
-        print(response['error_msg'])
-        quit()
-    else:
-        token = response['data']['access_token']
-        print("Authenticated.")
+    global token
+    try:
+        token
+    except NameError:
+        token = _authenticate(False)
 
     # Post!!!
 
@@ -69,17 +81,11 @@ def _anonpost(title):
 
 def _blogpost(title):
     
-    # Authenticate User
-    url = "https://write.as/api/auth/login"
-    payload = {"alias": user, "pass": pword}
-    auth = rq.post(url, json=payload)  # Authentication request
-    response = auth.json()  # Interpret JSON response
-    if response['code'] != 200:
-        print(response['error_msg'])
-        quit()
-    else:
-        token = response['data']['access_token']
-        print("Authenticated.")
+    global token
+    try:
+        token
+    except NameError:
+        token = _authenticate(False)
 
     # Post!!!
 
@@ -100,9 +106,9 @@ EOF
 if has('python')
         command! -nargs=1 AnonPost :python _anonpost(<f-args>)
         command! -nargs=1 BlogPost :python _blogpost(<f-args>)
-        command! -nargs=0 WriteAsAuth :python _authenticate(<f-args>)
+        command! -nargs=0 WriteAsAuth :python _authenticate(True)
 elseif has('python3')
         command! -nargs=1 AnonPost :python3 _anonpost(<f-args>)
         command! -nargs=1 BlogPost :python3 _blogpost(<f-args>)
-        command! -nargs=0 WriteAsAuth :python3 _authenticate(<f-args>)
+        command! -nargs=0 WriteAsAuth :python3 _authenticate(True)
 endif
