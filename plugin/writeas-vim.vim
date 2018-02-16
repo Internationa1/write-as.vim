@@ -15,6 +15,9 @@ import string
 v = vim
 rq = requests 
 
+# Constants
+useragent = "write.as-vim"
+
 #Define Variables
 try:
     user = vim.eval("g:writeas_u")
@@ -54,7 +57,8 @@ def _authenticate(outputToken):
     # Authenticate User
     url = "https://write.as/api/auth/login"
     payload = {"alias": username, "pass": password}
-    auth = rq.post(url, json=payload)  # Authentication request
+    head = {'User-Agent': useragent}
+    auth = rq.post(url, json=payload, headers=head)  # Authentication request
     response = auth.json()  # Interpret JSON response
     if response['code'] != 200:
         print(response['error_msg'])
@@ -80,7 +84,7 @@ def _anonpost(title):
     # Post!!!
 
     url = "https://write.as/api/posts"
-    head = {"Authorization": "Token {}".format(token), "Content-Type": "application/json"}
+    head = {"Authorization": "Token {}".format(token), "Content-Type": "application/json", "User-Agent": useragent}
     post = "\n".join(v.current.buffer)
     payload = {"body": post, "title": title}
     response = rq.post(url, json=payload, headers=head)
@@ -103,7 +107,7 @@ def _blogpost(title):
     # Post!!!
 
     url = "https://write.as/api/collections/{}/posts".format(blog)
-    head = {"Authorization": "Token {}".format(token), "Content-Type": "application/json"}
+    head = {"Authorization": "Token {}".format(token), "Content-Type": "application/json", "User-Agent": useragent}
     post = "\n".join(v.current.buffer)
     payload = {"body": post, "title": title} 
     response = rq.post(url, json=payload, headers=head)
