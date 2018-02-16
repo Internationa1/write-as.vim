@@ -16,7 +16,7 @@ v = vim
 rq = requests 
 
 # Constants
-useragent = "write.as-vim"
+useragent = "write.as-vim v 1.0.0"
 
 #Define Variables
 try:
